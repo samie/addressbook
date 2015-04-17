@@ -4,36 +4,22 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.tutorial.addressbook.backend.Contact;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.themes.ValoTheme;
 
 /* Create custom UI Components.
  *
  * Create your own Vaadin components by inheritance and composition.
- * This is a form component inherited from VerticalLayout. Use
+ * This is a form component inherited from layout defined declaratively
+ * in ContactFormLayout.html and is referred through ContactFormLayout
+ * Java class. These can either be written by hand or drawn with Vaadin
+ * Designer.
  * Use BeanFieldGroup to bind data fields from DTO to UI fields.
  * Similarly named field by naming convention or customized
  * with @PropertyId annotation.
  */
-public class ContactForm extends FormLayout {
-
-    Button save = new Button("Save", this::save) {{
-        /* Highlight primary actions.
-         *
-         * With Vaadin built-in styles you can highlight the primary save button
-         * and give it a keyboard shortcut for a better UX.
-         */
-        setStyleName(ValoTheme.BUTTON_PRIMARY);
-        setClickShortcut(ShortcutAction.KeyCode.ENTER);
-    }};
-    Button cancel = new Button("Cancel", this::cancel);
-
-    TextField firstName = new TextField("First name");
-    TextField lastName = new TextField("Last name");
-    TextField phone = new TextField("Phone");
-    TextField email = new TextField("Email");
-    DateField birthDate = new DateField("Birth date");
+public class ContactForm extends ContactFormLayout {
 
     Contact contact;
 
@@ -41,18 +27,12 @@ public class ContactForm extends FormLayout {
     BeanFieldGroup<Contact> formFieldBindings;
 
     public ContactForm() {
-        buildLayout();
         setVisible(false);
-    }
+        save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
-    private void buildLayout() {
-        setSizeUndefined();
-        setMargin(true);
-
-        HorizontalLayout actions = new HorizontalLayout(save, cancel);
-        actions.setSpacing(true);
-
-		addComponents(actions, firstName, lastName, phone, email, birthDate);
+        // Bind event handlers to declarative UI with static typing
+        save.addClickListener(this::save);
+        cancel.addClickListener(this::cancel);
     }
 
     /* Use any JVM language.
