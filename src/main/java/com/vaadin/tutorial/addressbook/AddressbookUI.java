@@ -26,6 +26,7 @@ public class AddressbookUI extends UI {
     
     
     
+    
     /* Hundreds of widgets.
      * Vaadin's user interface components are just Java objects that encapsulate
      * and handle cross-browser support and client-server communication. The
@@ -59,6 +60,8 @@ public class AddressbookUI extends UI {
     }
 
     private void configureComponents() {
+        
+       
          /* Synchronous event handling.
          *
          * Receive user interaction events on the server-side. This allows you
